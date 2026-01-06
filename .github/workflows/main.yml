@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main ]  # 确保这里是你的主分支名字，有的仓库是 master
+    branches: [ main ]
 
 permissions:
   contents: write
@@ -12,7 +12,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
+      # 新增：强制使用 Node.js 22 版本
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
 
       - name: Install and Build
         run: |
@@ -22,4 +28,4 @@ jobs:
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
-          folder: dist # Vue 项目默认打包生成的文件夹叫 dist
+          folder: dist
